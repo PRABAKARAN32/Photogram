@@ -1,22 +1,25 @@
 <?
  include 'libs/load.php';
+//  print(basename($_SERVER['PHP_SELF'],".php"));
+
+
 ?>
-
-
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-  <head>
+  <head> 
+    <?load_templates('_head');
+    ?>
 
-  <?
-     load_templates('_head');
-  ?>
+    
     
   </head>
   <body>
     <?
-    load_templates('_drop');
+     load_templates('_drop');
     ?>
+
     
+
   <?
      load_templates('_header');
   ?>
@@ -27,11 +30,11 @@
 
 
 <?
-     load_templates('_calltoaction');
+    //  load_templates('_calltoaction');
   ?>
   
-  <?load_templates('_photogram')?>
-  <?//load_templates('_login')?>
+  <?//load_templates('_photogram')?>
+  <?load_templates('_signup')?>
 
 </main>
 
@@ -41,4 +44,3 @@
 
     </body>
 </html>
-

@@ -1,3 +1,4 @@
+<header data-bs-theme="dark">
 <div class="collapse text-bg-dark" id="navbarHeader">
     <div class="container">
       <div class="row">
@@ -27,3 +28,4 @@
       </button>
     </div>
   </div>
+  </header>

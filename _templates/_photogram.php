@@ -45,7 +45,6 @@
                 <small class="text-body-secondary">9 mins</small>
               </div>
             </div>
-User
           </div>
         </div>
 
@@ -143,3 +142,4 @@ User
       </div>
     </div>
   </div>
+  
