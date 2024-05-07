@@ -8,10 +8,10 @@ class Database{
     {
         if(Database::$conn == null)
         {
-        $servername = "mysql.selfmade.ninja";
-        $username = "Photogram";
-        $password = "PKlegend32";
-        $dbname = "Photogram_login";
+        $servername = get_config("db_server");
+        $username = get_config("db_user");
+        $password = get_config("db_pass");
+        $dbname = get_config("db_name");
 
         
         // Create connection

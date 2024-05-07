@@ -6,7 +6,21 @@ include_once 'includes/Database.class.php';
 include_once 'includes/User.class.php';
 include_once 'includes/Session.class.php';
 
+global $__stie_config;
+$__stie_config = file_get_contents($_SERVER['DOCUMENT_ROOT']."/../photogram_db/db.json");
+
 session_start();
+
+function get_config($key,$default = null){
+    global $__stie_config;
+    $array = json_decode($__stie_config, true);
+    if(isset($array[$key])){
+        return $array[$key];
+    }
+    else{
+        return $default;
+    }
+}
 
 function load_templates($name){
     // print(__DIR__."/../_templates/$name.php");
