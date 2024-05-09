@@ -18,7 +18,7 @@ class Session
     {
         //print( "\n<br>" .$key . "  " . $value['username']);
         $_SESSION[$key] = $value;
-        //print_r($_SESSION);
+        // print_r($_SESSION."<br>");
         
     }
     
@@ -33,6 +33,7 @@ class Session
     }
     public static function get($key,$default = false)
     {
+        // print("KEY".$key."<br>");
         if(isset($_SESSION[$key]))
         {
             return $_SESSION[$key];   

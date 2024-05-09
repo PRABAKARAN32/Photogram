@@ -5,6 +5,22 @@ class User{
     private $username;
     private $id;
 
+    public function __call($name, $arguments)
+    {
+
+      $property = preg_replace("/[^0-9a-zA-Z]/","",substr($name,3));
+      $property = strtolower(preg_replace('/\B[A-Z]/', '_$1', $property));
+
+      if(substr($name, 0, 3) == "get"){
+        return $this->_get_data($property);
+      }
+      else if(substr($name, 0 , 3) == "set"){
+        return $this->_set_data($property,$arguments[0]);
+
+      }
+      
+    }
+
     public static function signup($user_name,$user_pass,$user_mobile,$user_email)
        {
             $conn = Database::getconnection();
@@ -64,7 +80,8 @@ class User{
             // }
             $row = $result->fetch_assoc();
             if(password_verify($user_pass,$row['password'])){
-              return $row;
+              // return $row['username'];
+              return new User($row['username']);
             }
           } else {
             return false;
@@ -81,9 +98,17 @@ class User{
     public function __construct($username)
     {
         $this->conn = Database::getconnection();
-        $this->conn->query();
         $this->username = $username;
-        $this->id = null;
+        $sql = "SELECT `id` FROM `auth` WHERE username = '$username' LIMIT 1";
+        $result = $this->conn->query($sql);
+
+        if($result->num_rows){
+          $row = $result->fetch_assoc();
+          $this->id = $row['id'];
+        }
+        else{
+          throw new Exception("User does't Exist");
+        }
     }
 
 
@@ -93,26 +118,64 @@ public function authentiate()
 }
 
 
-public function setBio()
-{
+// public function setBio()
+// {
     
+// }
+
+// public function getBio()
+// {
+    
+// }
+
+// public function setAvater()
+// {
+    
+// }
+
+// public function getAvater()
+// {
+    
+// }
+
+public function _get_data($var)
+{
+  
+  //if(!$this->conn){
+    $this->conn = Database::getconnection();
+  //}
+  $sql = "SELECT $var FROM user WHERE id = $this->id";
+  // print_r($sql);
+  $result = $this->conn->query($sql);
+  if($result->num_rows){
+    return $result->fetch_assoc()["$var"];
+  }
+  else{
+    return null;
+  }
 }
 
-public function getBio()
+
+public function _set_data($var, $data)
 {
-    
+  //if(!$this->conn){
+    $this->conn = Database::getconnection();
+  //}
+  $sql = "UPDATE `user` SET `$var` = `$data` WHERE 'id'=`$this->id`";
+  if($this->conn->query($sql)){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
-public function setAvater()
+public function setDob($year , $month, $date)
 {
-    
+  if(checkdate($month, $date, $year)){
+    return $this->_set_data('dob',"$year.$month.$date");
+  }
 }
-
-public function getAvater()
-{
-    
-}
-
 }
 
 

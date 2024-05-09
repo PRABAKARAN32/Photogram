@@ -43,7 +43,7 @@ if(isset($_GET['logout']))
 if(Session::get('is_loggedin'))
 {
     $userdata = Session::get('session_user');
-    print("Welcome Back" . $userdata['username']);
+    print("Welcome Back  " . $userdata->getfirstname());
     $result = $userdata;
 }
 else{
@@ -52,7 +52,7 @@ else{
             $result = User::login($email,$pass);
 
         if($result){
-            print("Login Sucess\n<br>"."$result[username]");
+            print("Login Sucess\n<br>".$result->getlastname());
             Session::set('is_loggedin',true);
             Session::set('session_user',$result);
         }
