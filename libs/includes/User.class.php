@@ -80,8 +80,8 @@ class User{
             // }
             $row = $result->fetch_assoc();
             if(password_verify($user_pass,$row['password'])){
-              // return $row['username'];
-              return new User($row['username']);
+              return $row['username'];
+              // return new User($row['username']);
             }
           } else {
             return false;
@@ -141,9 +141,9 @@ public function authentiate()
 public function _get_data($var)
 {
   
-  //if(!$this->conn){
+  if(!$this->conn){
     $this->conn = Database::getconnection();
-  //}
+  }
   $sql = "SELECT $var FROM user WHERE id = $this->id";
   // print_r($sql);
   $result = $this->conn->query($sql);
@@ -158,9 +158,9 @@ public function _get_data($var)
 
 public function _set_data($var, $data)
 {
-  //if(!$this->conn){
+  if(!$this->conn){
     $this->conn = Database::getconnection();
-  //}
+  }
   $sql = "UPDATE `user` SET `$var` = `$data` WHERE 'id'=`$this->id`";
   if($this->conn->query($sql)){
     return true;

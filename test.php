@@ -42,19 +42,22 @@ if(isset($_GET['logout']))
 //print(Session::get('is_loggedin'));
 if(Session::get('is_loggedin'))
 {
-    $userdata = Session::get('session_user');
-    print("Welcome Back  " . $userdata->getfirstname());
-    $result = $userdata;
+    $username = Session::get('session_username');
+    $userobj = new User($username);
+    
+    print("Welcome Back  " . $userobj->getfirstname());
+    // $result = $userdata;
 }
 else{
     
             print("No Session Found , Try to login again...!!");
             $result = User::login($email,$pass);
+            $userobj = new User($result);
 
         if($result){
-            print("Login Sucess\n<br>".$result->getlastname());
+            print("Login Sucess\n<br>".$userobj->getlastname());
             Session::set('is_loggedin',true);
-            Session::set('session_user',$result);
+            Session::set('session_username',$result);
         }
         else{
             print("Login Failed");
